@@ -1,0 +1,41 @@
+const { app, BrowserWindow, shell } = require('electron');
+const path = require('path');
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    minWidth: 900,
+    minHeight: 640,
+    title: 'AMOS Profilo di Studio',
+    icon: path.join(__dirname, 'icon.ico'),
+    backgroundColor: '#f8fafc',
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+
+  // Niente barra dei menu (File/Edit/…): app "pulita".
+  win.setMenuBarVisibility(false);
+
+  // Carica la web-app compilata (dist/index.html).
+  win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
+
+  // Eventuali link esterni si aprono nel browser di sistema, non nell'app.
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
+}
+
+app.whenReady().then(() => {
+  createWindow();
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});

@@ -1,0 +1,8 @@
+{
+	"appId": "it.amos.profilostudio",
+	"appName": "AMOS Profilo di Studio",
+	"webDir": "dist",
+	"android": {
+		"allowMixedContent": false
+	}
+}

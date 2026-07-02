@@ -1,0 +1,5 @@
+package it.amos.profilostudio;
+
+import com.getcapacitor.BridgeActivity;
+
+public class MainActivity extends BridgeActivity {}
